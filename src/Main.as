@@ -1,6 +1,7 @@
 package 
 {
 	import flash.desktop.NativeApplication;
+	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -14,6 +15,15 @@ package
 	 */
 	public class Main extends Sprite 
 	{
+		[Embed(source = "../img/background.jpg")]
+		private var bgImg:Class;
+		private var bg:Bitmap = new bgImg();
+		[Embed(source = "../img/dollarswon.png")]
+		private var currImg:Class;
+		private var curr:Bitmap = new currImg();
+		[Embed(source = "../img/heunjeok.png")]
+		private var logoImg:Class;
+		private var logo:Bitmap = new logoImg();
 		
 		public function Main():void 
 		{
@@ -25,6 +35,11 @@ package
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			// entry point
+			addChild(bg);
+			logo.width = stage.stageWidth - 20;
+			logo.x = 15;
+			logo.y = 15;
+			addChild(logo);
 			
 			// new to AIR? please read *carefully* the readme.txt files!
 		}
