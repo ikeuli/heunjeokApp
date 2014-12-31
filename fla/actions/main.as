@@ -2,6 +2,8 @@
 {
 	import flash.display.MovieClip;
 	import flash.events.*;
+	import flash.net.*;
+	import flash.text.*;
      
     public class main extends MovieClip 
 	{
@@ -19,8 +21,33 @@
 				errorMsg.text = "Please enter a username and password.";
 			
 			else
-				//processLogin();
-				errorMsg.text = "OK.";
+				processLogin();
+		}
+		
+		public function processLogin ():void {
+		 
+			var phpVars:URLVariables = new URLVariables();
+			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/app/appConnect.php");
+			trace(phpFileRequest);
+			
+			phpFileRequest.method = URLRequestMethod.POST;			 
+			phpFileRequest.data = phpVars;
+			 
+			var phpLoader:URLLoader = new URLLoader();
+			phpLoader.dataFormat = URLLoaderDataFormat.TEXT;  
+			phpLoader.addEventListener(Event.COMPLETE, showResult);
+			 
+			phpVars.systemCall = "checkLogin";
+			phpVars.username = usernameBox.text;
+			phpVars.password = passwordBox.text;
+			 
+			phpLoader.load(phpFileRequest);
+		}
+		
+		public function showResult (event:Event):void 
+		{
+			errorMsg.autoSize = TextFieldAutoSize.LEFT;
+			//errorMsg.text = "" + event.target.data.systemResult;
 		}
 	}
 }
