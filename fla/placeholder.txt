@@ -1,0 +1,9 @@
+submitButton1.addEventListener(MouseEvent.CLICK, onClick);
+
+function onClick(Event:MouseEvent):void
+{
+	if(usernameBox.text == "ddd" && passwordBox.text == "ddd") 
+		gotoAndPlay(2);
+	else
+		errorMsg.text = "The username or password is incorrect.";
+}
