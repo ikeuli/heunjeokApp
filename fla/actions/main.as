@@ -7,35 +7,49 @@
      
     public class main extends MovieClip 
 	{
-		public function main ():void 
+		public function main():void 
 		{
-			//submitButton1.buttonMode = true;
 			submitButton1.addEventListener(MouseEvent.MOUSE_DOWN, checkLogin);
 			usernameBox.text = "";
             passwordBox.text = "";
+			
+			try 
+			{
+				submitButton2.addEventListener(MouseEvent.MOUSE_DOWN, inputStats);
+				categoryBox.text = "";
+				amountBox.text = "";
+			}
+			catch(err:Error){}
         }
 		
-		public function checkLogin (e:MouseEvent):void 
+		public function checkLogin(e:MouseEvent):void 
 		{
 			if (usernameBox.text == "" || passwordBox.text == "") 
 				errorMsg.text = "Please enter a username and password.";
-			
 			else
 				processLogin();
 		}
 		
-		public function processLogin ():void {
+		public function inputStats(e:MouseEvent):void 
+		{
+			if (categoryBox.text == "" || amountBox.text == "") 
+				errorMsg.text = "Please enter a category and amount.";
+			else
+				trace("ddd");
+				//processLogin();
+		}
+		
+		public function processLogin():void {
 		 
 			var phpVars:URLVariables = new URLVariables();
-			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/app/appConnect.php");
-			trace(phpFileRequest);
+			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/appConnect.php?rand=" + Math.random() * 999999);
 			
 			phpFileRequest.method = URLRequestMethod.POST;			 
 			phpFileRequest.data = phpVars;
 			 
 			var phpLoader:URLLoader = new URLLoader();
-			phpLoader.dataFormat = URLLoaderDataFormat.TEXT;  
-			phpLoader.addEventListener(Event.COMPLETE, showResult);
+			phpLoader.dataFormat = URLLoaderDataFormat.VARIABLES;  
+			phpLoader.addEventListener(Event.COMPLETE, processResult);
 			 
 			phpVars.systemCall = "checkLogin";
 			phpVars.username = usernameBox.text;
@@ -44,10 +58,17 @@
 			phpLoader.load(phpFileRequest);
 		}
 		
-		public function showResult (event:Event):void 
+		public function processResult(e:Event):void 
 		{
-			errorMsg.autoSize = TextFieldAutoSize.LEFT;
-			//errorMsg.text = "" + event.target.data.systemResult;
+			if(e.target.data.systemResult == "Success!")
+				gotoAndPlay(5);
+			else
+			{
+				errorMsg.autoSize = TextFieldAutoSize.LEFT;
+				errorMsg.text = "" + e.target.data.systemResult;
+				usernameBox.text = "";
+				passwordBox.text = "";
+			}
 		}
 	}
 }
