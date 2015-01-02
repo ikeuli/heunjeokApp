@@ -89,6 +89,8 @@
 		
 		public function processInputResult(e:Event):void 
 		{
+			errorMsg2.autoSize = TextFieldAutoSize.LEFT;
+			errorMsg2.text = "" + e.target.data.systemResult;
 			categoryBox.text = "";
 			amountBox.text = "";
 		}
