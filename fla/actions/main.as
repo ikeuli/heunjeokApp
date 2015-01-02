@@ -12,14 +12,6 @@
 			submitButton1.addEventListener(MouseEvent.MOUSE_DOWN, checkLogin);
 			usernameBox.text = "";
             passwordBox.text = "";
-			
-			try 
-			{
-				submitButton2.addEventListener(MouseEvent.MOUSE_DOWN, inputStats);
-				categoryBox.text = "";
-				amountBox.text = "";
-			}
-			catch(err:Error){}
         }
 		
 		public function checkLogin(e:MouseEvent):void 
@@ -33,10 +25,9 @@
 		public function inputStats(e:MouseEvent):void 
 		{
 			if (categoryBox.text == "" || amountBox.text == "") 
-				errorMsg.text = "Please enter a category and amount.";
+				errorMsg2.text = "Please enter a category and amount.";
 			else
-				trace("ddd");
-				//processLogin();
+				processInput();
 		}
 		
 		public function processLogin():void {
@@ -49,7 +40,7 @@
 			 
 			var phpLoader:URLLoader = new URLLoader();
 			phpLoader.dataFormat = URLLoaderDataFormat.VARIABLES;  
-			phpLoader.addEventListener(Event.COMPLETE, processResult);
+			phpLoader.addEventListener(Event.COMPLETE, processLoginResult);
 			 
 			phpVars.systemCall = "checkLogin";
 			phpVars.username = usernameBox.text;
@@ -58,10 +49,35 @@
 			phpLoader.load(phpFileRequest);
 		}
 		
-		public function processResult(e:Event):void 
+		public function processInput():void {
+		 
+			var phpVars:URLVariables = new URLVariables();
+			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/appConnect.php?rand=" + Math.random() * 999999);
+			
+			phpFileRequest.method = URLRequestMethod.POST;			 
+			phpFileRequest.data = phpVars;
+			 
+			var phpLoader:URLLoader = new URLLoader();
+			phpLoader.dataFormat = URLLoaderDataFormat.VARIABLES;  
+			phpLoader.addEventListener(Event.COMPLETE, processInputResult);
+			 
+			phpVars.systemCall = "inputStats";
+			phpVars.category = categoryBox.text;
+			phpVars.amount = amountBox.text;
+			 
+			phpLoader.load(phpFileRequest);
+		}
+		
+		public function processLoginResult(e:Event):void 
 		{
 			if(e.target.data.systemResult == "Success!")
+			{
+				submitButton1.removeEventListener(MouseEvent.MOUSE_DOWN, checkLogin);
 				gotoAndPlay(5);
+				submitButton2.addEventListener(MouseEvent.MOUSE_DOWN, inputStats);
+				categoryBox.text = "";
+				amountBox.text = "";
+			}
 			else
 			{
 				errorMsg.autoSize = TextFieldAutoSize.LEFT;
@@ -69,6 +85,12 @@
 				usernameBox.text = "";
 				passwordBox.text = "";
 			}
+		}
+		
+		public function processInputResult(e:Event):void 
+		{
+			categoryBox.text = "";
+			amountBox.text = "";
 		}
 	}
 }
