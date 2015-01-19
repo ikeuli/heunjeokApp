@@ -199,6 +199,14 @@
 			phpVars.systemCall = "inputStats";
 			phpVars.category = categoryBox.text;
 			phpVars.amount = amountBox.text;
+			if(memoBox.text != "")
+				phpVars.memo = memoBox.text;
+			if(monthBox.text != "")
+				phpVars.customMonth = monthBox.text;
+			if(dayBox.text != "")
+				phpVars.customDay = dayBox.text;
+			if(yearBox.text != "")
+				phpVars.customYear = yearBox.text;
 			 
 			phpLoader.load(phpFileRequest);
 		}
