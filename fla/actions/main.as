@@ -168,7 +168,7 @@
 		public function processLogin():void {
 		 
 			var phpVars:URLVariables = new URLVariables();
-			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/appConnect.php?rand=" + Math.random() * 999999);
+			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/heunjeok/appConnect.php?rand=" + Math.random() * 999999);
 			
 			phpFileRequest.method = URLRequestMethod.POST;			 
 			phpFileRequest.data = phpVars;
@@ -187,7 +187,7 @@
 		public function processInput():void {
 		 
 			var phpVars:URLVariables = new URLVariables();
-			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/appConnect.php?rand=" + Math.random() * 999999);
+			var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/heunjeok/appConnect.php?rand=" + Math.random() * 999999);
 			
 			phpFileRequest.method = URLRequestMethod.POST;			 
 			phpFileRequest.data = phpVars;
@@ -219,7 +219,7 @@
 				gotoAndPlay(5);
 				
 				var phpVars:URLVariables = new URLVariables();
-				var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/appConnect.php?rand=" + Math.random() * 999999);
+				var phpFileRequest:URLRequest = new URLRequest("http://heunjeok.com/heunjeok/appConnect.php?rand=" + Math.random() * 999999);
 				phpFileRequest.method = URLRequestMethod.POST;			 
 				phpFileRequest.data = phpVars;
 				var phpLoader:URLLoader = new URLLoader();
